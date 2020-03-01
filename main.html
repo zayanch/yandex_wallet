@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="postRequest();">button</button>
+
+    <script type="text/javascript">
+        const CLIENT_ID =
+            'D663E0F3D32A30840BD57934BDAAF599E38ACEF70CB6CD158EE31405C5E6E789'; //'4C3377E21684BD900004C33F82C825E452874426BE9228A4E289473CC3A48A09';
+        const REDIRECT_URI = 'https://oauth.yandex.ru/verification_code';
+        /*
+
+        POST /oauth/authorize HTTP/1.1
+        Host: money.yandex.ru
+        Content-Type: application/x-www-form-urlencoded
+        Content-Length: 191
+        scope=account-info operation-history
+        client_id=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ01&response_type=code&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb&scope=account%2Dinfo%20operation%2Dhistory
+        */
+
+        function postRequest() {
+            console.log('FFF');
+            var xhr = new XMLHttpRequest();
+
+            var body =
+                `client_id=${encodeURIComponent(CLIENT_ID)}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=${encodeURIComponent('code')}&scope=${encodeURIComponent('account-info operation-history')}`;
+            console.log('body--->' + body);
+
+            xhr.open("POST", 'https://money.yandex.ru/oauth/authorize');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            console.log('xhr--->' + JSON.stringify(xhr));
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState != 4) {
+                    console.log('!!!!!!!!!');
+                    console.log('this.status-->' + this.status);
+                    console.log('this.responseText-->' + this.responseText)
+                };
+
+                console.log(this.responseText);
+            }
+
+            xhr.send(body);
+        }
+    </script>
+</body>
+
+</html>
